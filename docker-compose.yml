@@ -1,0 +1,70 @@
+version: '3.9'
+
+services:
+  web:
+    build: ./app
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app/:/usr/src/app/
+      - ./jenkins/jenkins_data:/var/jenkins_home
+      - /app/static_volume:/home/app/web/staticfiles
+      - /app/media_volume:/home/app/web/mediafiles
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      # - POSTGRES_HOST_AUTH_METHOD=trust
+      # - POSTGRES_USER=taha
+      # - POSTGRES_PASSWORD=taha
+      # - POSTGRES_HOST=localhost
+      POSTGRES_DB: try2
+      POSTGRES_USER: taha
+      POSTGRES_PASSWORD: taha
+      PGDATA: /var/lib/postgresql/data
+    ports: 
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: taha.maatof@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8081:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    links:
+      - "db:pgsql-server"
+  jenkins:
+    build: ./jenkins
+    restart: always         
+    ports:
+        - "8088:8080"
+        - "50000:50000"
+    volumes:            
+        - jenkins_data:/var/jenkins_home
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  jenkins_data:
+  pgadmin-data:
+  static_volume:
+  media_volume:
