@@ -5,8 +5,8 @@ services:
     build: ./app
     command: python manage.py runserver 0.0.0.0:8000
     restart: always
-    environment: 
-      - PATH=/usr/local/bin/docker-compose
+    # environment: 
+    #   - PATH=/usr/local/bin/docker-compose
     volumes:
       - ./app/:/usr/src/app/
       - ./jenkins/jenkins_data:/var/jenkins_home
