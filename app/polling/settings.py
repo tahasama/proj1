@@ -84,14 +84,14 @@ WSGI_APPLICATION = 'polling.wsgi.application'
 
 DATABASES = {
     'default': {
-    #'ENGINE': 'django.db.backends.postgresql',
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'try2',
-    'USER': 'taha',
-    'PASSWORD': 'taha',
-    'HOST': 'db',
-    'PORT': 5432
-    }
+        #'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'try2',
+        'USER': 'taha',
+        'PASSWORD': 'taha',
+        'HOST': '172.25.0.1',
+        'PORT': 5432,
+        }
  }
 
 # Password validation
