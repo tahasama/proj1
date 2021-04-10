@@ -8,29 +8,37 @@ services:
     volumes:
       - ./app/:/usr/src/app/
       - ./jenkins/jenkins_data:/var/jenkins_home
+      - /jenkins/artifacts:/var/jenkins_artifacts
       - /app/static_volume:/home/app/web/staticfiles
       - /app/media_volume:/home/app/web/mediafiles
     ports:
       - 8000:8000
     depends_on:
       - db
+    networks:
+      - jenkins_net
+  jenkins:
+    build: ./jenkins
+    restart: always         
+    ports:
+        - "8088:8080"
+        - "50000:50000"
+    volumes:            
+        - jenkins_data:/var/jenkins_home
+        - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - db
   db:
     image: postgres
-    
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      # - POSTGRES_HOST_AUTH_METHOD=trust
-      # - POSTGRES_USER=taha
-      # - POSTGRES_PASSWORD=taha
-      # - POSTGRES_HOST=localhost
       POSTGRES_DB: try2
       POSTGRES_USER: taha
-      POSTGRES_PASSWORD: taha
+      POSTGRES_PASSWORD: taha      
       PGDATA: /var/lib/postgresql/data
     ports: 
       - "5432:5432"
-
   pgadmin:
     image: dpage/pgadmin4
     restart: always
@@ -44,18 +52,6 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     links:
       - "db:pgsql-server"
-  jenkins:
-    build: ./jenkins
-    restart: always         
-    ports:
-        - "8088:8080"
-        - "50000:50000"
-
-    volumes:            
-        - jenkins_data:/var/jenkins_home
-        - /var/run/docker.sock:/var/run/docker.sock
-
-
   nginx:
     build: ./nginx
     volumes:
@@ -65,10 +61,11 @@ services:
       - 1337:80
     depends_on:
       - web
-
 volumes:
   postgres_data:
   jenkins_data:
   pgadmin-data:
   static_volume:
   media_volume:
+networks:
+  jenkins_net:

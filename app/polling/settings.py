@@ -84,14 +84,15 @@ WSGI_APPLICATION = 'polling.wsgi.application'
 
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.postgresql',
+    #'ENGINE': 'django.db.backends.postgresql',
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'try2',
     'USER': 'taha',
     'PASSWORD': 'taha',
     'HOST': 'db',
     'PORT': 5432
     }
-}
+ }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

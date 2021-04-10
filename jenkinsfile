@@ -1,31 +1,32 @@
 pipeline {
-    agent {
-        // docker { image 'python:3.9' }
-        docker { image 'docker' }
+    agent { //none
+        docker { image 'python:3.9' }
     }
-    // environment {
-    //     PATH = "$PATH:/usr/local/bin"
 
-    // }
     stages {
-        // stage('Build') {
-        //     steps {
-        //         sh 'pip install -r requirements.txt'
-        //     }
-        // }
-
-        stage('Test') {
+        stage('Build') {
+            //agent {
+              //  docker { image 'python:3.9' }
+                //}
+            
             steps {
-              sh 'docker -v'  // sh '/usr/local/bin/docker-compose run web python manage.py test'
-              echo 'df df dfdfdf'  
-               
-              sh 'docker-compose -v'
+                
+                sh 'pip install -r requirements.txt'
             }
         }
-
-        stage('Deploy') {
+        stage('Test') {
+            //agent any
             steps {
-                sh 'echo not yet...taha'
+               // sh 'docker-compose -v'
+               // sh 'docker-compose run web python manage.py test ./app'
+                sh ' python app/manage.py test ./app'
+            }
+        }
+        stage('Deploy') {
+            //agent any
+            steps {
+                
+                 sh 'echo not yet...taha'
             }
         }
     }
