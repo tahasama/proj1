@@ -6,15 +6,13 @@ pipeline {
                 sh 'pip install - requirements.tx'
             }
         }
-    }
-    stages {
+
         stage('Build') {
             steps {
                 echo 'python manage.py test'
             }
         }
-    }
-    stages {
+
         stage('Deploy') {
             steps {
                 sh 'echo not yet...taha'
