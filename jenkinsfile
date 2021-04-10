@@ -1,21 +1,22 @@
 pipeline {
     agent {
         docker { image 'python:3.9' }
+        docker { image 'docker:lts' }
     }
     // environment {
     //     PATH = "$PATH:/usr/local/bin"
 
     // }
     stages {
-        stage('Build') {
-            steps {
-                sh 'pip install -r requirements.txt'                
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         sh 'pip install -r requirements.txt'
+        //     }
+        // }
 
         stage('Test') {
             steps {
-                sh '/usr/local/bin/docker-compose run web python manage.py test'
+              sh 'docker -v'  // sh '/usr/local/bin/docker-compose run web python manage.py test'
             }
         }
 
