@@ -2,6 +2,10 @@ pipeline {
     agent {
         docker { image 'python:3.9' }
     }
+    environment {
+        PATH = "$PATH:/usr/local/bin"
+
+    }
     stages {
         stage('Build') {
             steps {
@@ -11,7 +15,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'docker run web python manage.py test'
+
+                sh 'docker-compose run web python manage.py test'
             }
         }
 
