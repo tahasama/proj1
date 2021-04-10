@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'echo Building ta77a'
             }
         }
         stage('Test') { 
             steps {
-                echo 'python manage.py test' 
+                echo 'Testing ta7i7o' 
             }
         }
         stage('Deploy') { 
