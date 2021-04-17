@@ -1,6 +1,9 @@
 ---
-- name: Test connectivity to target servers
+- name: Apache server installed
   hosts: localhost
-  tasks: 
-    - name: Ping test
-      ping:
+  #become: yes
+  tasks:
+  - name: latest Apache version installed
+    apt:
+      name: apache2
+      state: latest
