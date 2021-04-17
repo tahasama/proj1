@@ -1,33 +1,12 @@
-pipeline {
-    agent { //none
-        docker { image 'python:3.9' }
-    }
 
+pipeline {
+    agent any
     stages {
-        stage('Build') {
-            //agent {
-              //  docker { image 'python:3.9' }
-                //}
-            
+        stage('build') {
             steps {
-                
-                sh 'pip install -r requirements.txt'
+             ansiblePlaybook credentialsId: '69832d10-b9ae-4885-892a-5301ec83305b', disableHostKeyChecking: true, installation: 'ansible', playbook: 'play-ansible.yml'       
+             
             }
-        }
-        stage('Test') {
-            //agent any
-            steps {
-               // sh 'docker-compose -v'
-               // sh 'docker-compose run web python manage.py test ./app'
-                sh ' python app/manage.py test ./app'
             }
-        }
-        stage('Deploy') {
-            //agent any
-            steps {
-                
-                 sh 'echo not yet...taha...wa touhou'
-            }
-        }
     }
 }
