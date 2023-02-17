@@ -1,1 +1,3 @@
-# proj1
+# proj experiment
+
+Experimenting with Docker, Jenkins, Ansible 
